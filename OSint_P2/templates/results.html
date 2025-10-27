@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results - OSINT Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a href="/" class="navbar-brand mb-0 h1">
+                <i class="fas fa-search"></i> OSINT Social Media Analyzer
+            </a>
+            <a href="/" class="btn btn-light btn-sm">
+                <i class="fas fa-plus"></i> New Analysis
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">
+                            <i class="fas fa-chart-bar"></i> Analysis Results for "{{ keyword }}"
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="stat-card text-center p-3 bg-light rounded">
+                                    <h2 class="mb-0">{{ summary.total_items }}</h2>
+                                    <p class="text-muted mb-0">Total Items</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card text-center p-3 bg-success text-white rounded">
+                                    <h2 class="mb-0">{{ summary.positive_count }}</h2>
+                                    <p class="mb-0">Positive ({{ "%.1f"|format(summary.positive_percent) }}%)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card text-center p-3 bg-danger text-white rounded">
+                                    <h2 class="mb-0">{{ summary.negative_count }}</h2>
+                                    <p class="mb-0">Negative ({{ "%.1f"|format(summary.negative_percent) }}%)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card text-center p-3 bg-secondary text-white rounded">
+                                    <h2 class="mb-0">{{ summary.neutral_count }}</h2>
+                                    <p class="mb-0">Neutral ({{ "%.1f"|format(summary.neutral_percent) }}%)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-info-circle"></i> Overall Sentiment</h5>
+                                <div class="sentiment-indicator mb-3">
+                                    {% if summary.avg_compound >= 0.05 %}
+                                        <span class="badge bg-success fs-5">Positive</span>
+                                    {% elif summary.avg_compound <= -0.05 %}
+                                        <span class="badge bg-danger fs-5">Negative</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary fs-5">Neutral</span>
+                                    {% endif %}
+                                </div>
+                                <p><strong>Average Compound Score:</strong> {{ "%.3f"|format(summary.avg_compound) }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-database"></i> Data Sources</h5>
+                                <div>
+                                    {% for source in summary.sources_used %}
+                                        <span class="badge bg-info me-2">{{ source }}</span>
+                                    {% endfor %}
+                                </div>
+                                <p class="mt-2"><small class="text-muted">Analysis completed: {{ summary.timestamp }}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-pie"></i> Sentiment Distribution</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if visualizations.pie_chart %}
+                            <img src="{{ visualizations.pie_chart }}" class="img-fluid" alt="Pie Chart">
+                        {% else %}
+                            <p class="text-muted">Visualization not available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Sentiment Counts</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if visualizations.bar_chart %}
+                            <img src="{{ visualizations.bar_chart }}" class="img-fluid" alt="Bar Chart">
+                        {% else %}
+                            <p class="text-muted">Visualization not available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-area"></i> Score Distribution</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if visualizations.distribution %}
+                            <img src="{{ visualizations.distribution }}" class="img-fluid" alt="Distribution Chart">
+                        {% else %}
+                            <p class="text-muted">Visualization not available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-clock"></i> Sentiment Over Time</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if visualizations.time_series %}
+                            <img src="{{ visualizations.time_series }}" class="img-fluid" alt="Time Series">
+                        {% else %}
+                            <p class="text-muted">Time series data not available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-layer-group"></i> Sentiment by Source</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        {% if visualizations.source_comparison %}
+                            <img src="{{ visualizations.source_comparison }}" class="img-fluid" alt="Source Comparison">
+                        {% else %}
+                            <p class="text-muted">Source comparison not available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-file-alt"></i> Detailed Sentiment Breakdown</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Average Positive Score</td>
+                                        <td>{{ "%.3f"|format(summary.avg_positive) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Neutral Score</td>
+                                        <td>{{ "%.3f"|format(summary.avg_neutral) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Negative Score</td>
+                                        <td>{{ "%.3f"|format(summary.avg_negative) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Compound Score</td>
+                                        <td><strong>{{ "%.3f"|format(summary.avg_compound) }}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <a href="/" class="btn btn-primary btn-lg">
+                    <i class="fas fa-plus"></i> Analyze Another Keyword
+                </a>
+                <button class="btn btn-secondary btn-lg" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-5 py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">OSINT Social Media Analyzer • Developed for Academic Purposes</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
