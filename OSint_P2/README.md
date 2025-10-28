@@ -2,7 +2,7 @@
 
 A comprehensive Python-based OSINT (Open Source Intelligence) tool that analyzes publicly available information from multiple social media platforms and news sources to determine sentiment around specific keywords or topics.
 
-## 🎯 Features
+## Features
 
 - **Multi-Platform Data Collection**
   - Reddit posts and comments (using PRAW)
@@ -34,12 +34,12 @@ A comprehensive Python-based OSINT (Open Source Intelligence) tool that analyzes
   - Interactive dashboards
   - Bootstrap-based responsive design
 
-## 📋 Requirements
+## Requirements
 
 - Python 3.8 or higher
 - See `requirements.txt` for full list of dependencies
 
-## 🚀 Installation
+## Installation
 
 ### 1. Clone the Repository
 
@@ -151,7 +151,7 @@ python sentiment/analyzer.py
 python visualization/charts.py
 ```
 
-## 📊 Libraries Used
+## Libraries Used
 
 1. **praw** - Reddit API wrapper for collecting Reddit posts
 2. **BeautifulSoup4** - Web scraping for Google News articles
@@ -164,7 +164,7 @@ python visualization/charts.py
 9. **flask** - Web application framework
 10. **nltk** - Natural Language Processing toolkit
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 OSint_P2/
@@ -198,7 +198,7 @@ OSint_P2/
 └── README.md                   # This file
 ```
 
-## 🎓 Academic Implementation Notes
+## Academic Implementation Notes
 
 This project demonstrates:
 
@@ -229,14 +229,14 @@ This project demonstrates:
    - Sentiment breakdown
    - Data exports
 
-## ⚠️ Important Notes
+## Important Notes
 
 - **Rate Limits**: Be mindful of API rate limits, especially for Reddit
 - **Web Scraping**: Google may block requests if you scrape too aggressively
 - **Data Privacy**: This tool only collects publicly available data
 - **Academic Use**: Intended for educational and research purposes
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Reddit Not Working
 - Ensure your `.env` file has valid credentials
@@ -257,21 +257,21 @@ This project demonstrates:
 - Verify Flask is installed correctly
 - Check the console for error messages
 
-## 📝 License
+## License
 
 This project is developed for academic purposes. Please ensure you comply with the terms of service of all platforms you scrape data from.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Adapted from [Jose-Sabater/marketeer](https://github.com/Jose-Sabater/marketeer) repository
 - Uses VADER Sentiment Analysis (Hutto & Gilbert, 2014)
 - Built with Flask, Bootstrap, and modern web technologies
 
-## 👨‍💻 Author
+## Author
 
 Developed as part of an OSINT analysis project demonstrating social media sentiment analysis techniques.
 
-## 📧 Support
+## Support
 
 For issues or questions:
 1. Check the troubleshooting section
