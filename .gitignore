@@ -151,3 +151,7 @@ data/__pycache__/
 coverage.xml
 
 OSint_P1/Screenshots/
+OSint_P2/reports/
+OSint_P2/Screenshots/
+OSint_P2/static/images/
+
