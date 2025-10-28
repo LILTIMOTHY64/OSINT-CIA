@@ -94,7 +94,7 @@ python -c "import nltk; nltk.download('vader_lexicon'); nltk.download('punkt')"
 
 **Note:** Reddit scraping is optional. The tool will work with Google News and RSS feeds even without Reddit credentials.
 
-## 📖 Usage
+## Usage
 
 ### Web Application (Recommended)
 
