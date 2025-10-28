@@ -8,7 +8,7 @@ import shodan
 app = Flask(__name__)
 
 # Replace with your actual Shodan API key
-SHODAN_API_KEY = 'FidfPxQqito0VScDhgI3UXGJBGD9cRGk'
+SHODAN_API_KEY = 'YOUR_SHODAN_KEY_HERE'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
