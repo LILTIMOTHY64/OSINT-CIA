@@ -5,18 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analysis Results - OSINT Analyzer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a href="/" class="navbar-brand mb-0 h1">
-                <i class="fas fa-search"></i> OSINT Social Media Analyzer
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <span class="me-2 brand-mark">🔎</span>
+                <span class="brand-title">OSINT Social Media Analyzer</span>
             </a>
-            <a href="/" class="btn btn-light btn-sm">
-                <i class="fas fa-plus"></i> New Analysis
-            </a>
+            <div class="ms-auto d-flex gap-2">
+                <a href="/" class="btn btn-outline-primary btn-sm">New Analysis</a>
+                <a href="#" class="btn btn-outline-secondary btn-sm">Export</a>
+            </div>
         </div>
     </nav>
 
@@ -24,33 +27,36 @@
         <div class="row">
             <div class="col-12">
                 <div class="card shadow mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="mb-0">
-                            <i class="fas fa-chart-bar"></i> Analysis Results for "{{ keyword }}"
-                        </h3>
+                    <div class="card-header bg-white">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h3 class="mb-0">
+                                <i class="fas fa-chart-bar text-primary"></i> Analysis Results for "{{ keyword }}"
+                            </h3>
+                            <small class="text-muted">Completed: {{ summary.timestamp }}</small>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="stat-card text-center p-3 bg-light rounded">
+                                <div class="stat-card text-center p-3 bg-white rounded border">
                                     <h2 class="mb-0">{{ summary.total_items }}</h2>
                                     <p class="text-muted mb-0">Total Items</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="stat-card text-center p-3 bg-success text-white rounded">
+                                <div class="stat-card text-center p-3 bg-success text-white rounded shadow-sm">
                                     <h2 class="mb-0">{{ summary.positive_count }}</h2>
                                     <p class="mb-0">Positive ({{ "%.1f"|format(summary.positive_percent) }}%)</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="stat-card text-center p-3 bg-danger text-white rounded">
+                                <div class="stat-card text-center p-3 bg-danger text-white rounded shadow-sm">
                                     <h2 class="mb-0">{{ summary.negative_count }}</h2>
                                     <p class="mb-0">Negative ({{ "%.1f"|format(summary.negative_percent) }}%)</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="stat-card text-center p-3 bg-secondary text-white rounded">
+                                <div class="stat-card text-center p-3 bg-secondary text-white rounded shadow-sm">
                                     <h2 class="mb-0">{{ summary.neutral_count }}</h2>
                                     <p class="mb-0">Neutral ({{ "%.1f"|format(summary.neutral_percent) }}%)</p>
                                 </div>
