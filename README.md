@@ -1,4 +1,4 @@
-# Social Media Analyzer
+# BeaconOSINT
 
 A comprehensive Python-based OSINT (Open Source Intelligence) tool that analyzes publicly available information from multiple social media platforms and news sources to determine sentiment around specific keywords or topics.
 
